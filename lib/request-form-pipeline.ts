@@ -6,7 +6,7 @@ export class RequestFormPipelineStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props)
 
-    const pipeline = new pipelines.CodePipeline(this, 'Pipeline', {
+    const pipeline = new pipelines.CodePipeline(this, 'BackendPipeline', {
       synth: new pipelines.ShellStep('Synth', {
         input: pipelines.CodePipelineSource.connection('justintlaw/request-form-backend', 'main', {
           connectionArn: 'GOES HERE' // TODO

@@ -6,6 +6,6 @@ export class RequestFormPipelineStage extends Stage {
   constructor(scope: Construct, id: string, props?: StageProps) {
     super(scope, id, props)
 
-    new RequestFormBackendStack(this, 'RequestFormBackendStack')
+    new RequestFormBackendStack(this, 'RequestFormApiStack')
   }
 }
