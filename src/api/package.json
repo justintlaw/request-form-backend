@@ -1,0 +1,30 @@
+{
+  "name": "request-form-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "db:start": "docker run -d --name request-form -p 8000:8000 amazon/dynamodb-local",
+    "db:setup": "./scripts/localDbSetup.sh",
+    "db:stop": "docker stop request-form && docker rm request-form",
+    "db:gui": "npx dynamodb-admin",
+    "api:local": "IS_LOCAL=true nodemon server.js",
+    "api:prod": "node server.js"
+  },
+  "author": "Justin Lawrence",
+  "license": "ISC",
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.58.0",
+    "@aws-sdk/lib-dynamodb": "^3.58.0",
+    "@vendia/serverless-express": "^4.5.4",
+    "cognito-express": "^3.0.1",
+    "cors": "^2.8.5",
+    "express": "^4.17.3",
+    "express-async-handler": "^1.2.0",
+    "firebase-admin": "^10.0.2",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
