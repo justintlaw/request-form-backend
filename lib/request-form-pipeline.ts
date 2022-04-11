@@ -12,8 +12,8 @@ export class RequestFormPipelineStack extends Stack {
           connectionArn: 'GOES HERE' // TODO
         }),
         commands: [
-          'cd src && npm install --production',
-          'cd ..',
+          'cd src/api && npm install --production',
+          'cd ../..',
           'npm install',
           'npm run build',
           'npx cdk synth'

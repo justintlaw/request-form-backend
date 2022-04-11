@@ -1,4 +1,4 @@
-import { pipelines, Stack, StackProps, Stage, StageProps } from 'aws-cdk-lib'
+import { Stage, StageProps } from 'aws-cdk-lib'
 import { Construct } from 'constructs'
 import { RequestFormBackendStack } from './request-form-backend-stack'
 

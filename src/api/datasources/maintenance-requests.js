@@ -2,7 +2,7 @@
 
 const { v4: uuidv4 } = require('uuid')
 const { DynamoDB } = require('@aws-sdk/client-dynamodb')
-const { DynamoDBDocumentClient, GetCommand, ScanCommand, PutCommand, UpdateCommand, DeleteCommand } = require('@aws-sdk/lib-dynamodb')
+const { DynamoDBDocumentClient, GetCommand, ScanCommand, QueryCommand, PutCommand, UpdateCommand, DeleteCommand } = require('@aws-sdk/lib-dynamodb')
 const { TABLE_NAME: TableName = 'maintenance_requests' } = process.env
 
 const client = new DynamoDB({ endpoint: 'http://localhost:8000' })
@@ -35,7 +35,19 @@ const createMaintenanceRequest = async ({ name, address, email, phone, issue }) 
   return {}
 }
 
-const getAllMaintenanceRequests = async () => {
+const getAllMaintenanceRequests = async (shouldFilterByPending = false) => {
+  if (shouldFilterByPending) {
+    const { Items } = await ddbClient.send(new QueryCommand({
+      TableName,
+      IndexName: 'StatusIndex',
+      KeyConditionExpression: '#s=:pending_status',
+      ExpressionAttributeNames: { '#s': 'status' },
+      ExpressionAttributeValues: { ':pending_status': 'pending' }
+    }))
+
+    return Items
+  }
+
   const { Items } = await ddbClient.send(new ScanCommand({
     TableName,
     ProjectionExpression: 'id, #n, address, email, phone, issue, #s, created_at, updated_at',

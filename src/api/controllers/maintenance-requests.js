@@ -22,8 +22,10 @@ const createMaintenanceRequest = async (req, _, next) => {
 }
 
 const getAllMaintenanceRequests = async (req, _, next) => {
+  const shouldFilterByPending = req.query.pending === 'true'
+
   try {
-    req.responseData = await dataSources.maintenanceRequests.getAllMaintenanceRequests()
+    req.responseData = await dataSources.maintenanceRequests.getAllMaintenanceRequests(shouldFilterByPending)
     return next()
   } catch (err) {
     return next(err)
