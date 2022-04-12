@@ -14,6 +14,7 @@ const ddbClient = DynamoDBDocumentClient.from(client, {
 })
 
 const { Status } = require('../constants')
+const ValidStatuses = [Status.CANCELED, Status.PENDING, Status.COMPLETED]
 
 const createMaintenanceRequest = async ({ name, address, email, phone, issue }) => {
   const res = await ddbClient.send(new PutCommand({
@@ -102,8 +103,8 @@ const updateMaintenanceRequest = async (id, { name, address, email, phone, issue
     expressionAttributeValues[':issue'] = issue
   }
 
-  if (status && !Status[status.toUpperCase()]) {
-    if (!Status[status.toUpperCase()]) {
+  if (status) {
+    if (!ValidStatuses.includes(status)) {
       throw new Error('Invalid Status')
     }
 
@@ -121,8 +122,11 @@ const updateMaintenanceRequest = async (id, { name, address, email, phone, issue
   // Only pass ExpressionAttributeNames if it is populated
   let optionalParams = {}
   if (Object.keys(expressionAttributeNames).length > 0) {
+    console.log('im in')
     optionalParams.ExpressionAttributeNames = expressionAttributeNames
   }
+
+  console.log('hi')
 
   const { Attributes } = await ddbClient.send(new UpdateCommand({
     ...optionalParams,

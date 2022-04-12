@@ -45,10 +45,8 @@ const updateMaintenanceRequest = async (req, _, next) => {
   const { id } = req.params
   const { name, address, email, phone, issue, status } = req.body
 
-  console.log('Im upadting!')
 
   if (status && !Status[`${status.toUpperCase()}`]) {
-    console.log('status error!')
     return next(Error('Status must be one of ["pending", "canceled", "completed", ]'))
   }
 
