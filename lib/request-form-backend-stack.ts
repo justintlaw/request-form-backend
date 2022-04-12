@@ -15,7 +15,6 @@ export class RequestFormBackendStack extends Stack {
 
     // create table
     const maintenanceRequestsTable = new aws_dynamodb.Table(this, 'RequestsTable', {
-      tableName: 'maintenance_requests',
       partitionKey: { name: 'id', type: aws_dynamodb.AttributeType.STRING },
       billingMode: aws_dynamodb.BillingMode.PROVISIONED,
       readCapacity: 2,
