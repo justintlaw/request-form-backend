@@ -9,7 +9,7 @@ export class RequestFormPipelineStack extends Stack {
     const pipeline = new pipelines.CodePipeline(this, 'BackendPipeline', {
       synth: new pipelines.ShellStep('Synth', {
         input: pipelines.CodePipelineSource.connection('justintlaw/request-form-backend', 'main', {
-          connectionArn: 'GOES HERE' // TODO
+          connectionArn: 'arn:aws:codestar-connections:us-west-2:256343118501:connection/bf2f468e-ff70-4e35-ae80-6b58ecb50af9'
         }),
         commands: [
           'cd src/api && npm install --production',
