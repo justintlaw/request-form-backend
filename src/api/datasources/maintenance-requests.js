@@ -118,12 +118,18 @@ const updateMaintenanceRequest = async (id, { name, address, email, phone, issue
   // remove first comma
   updateExpression = updateExpression.slice(0, 4) + updateExpression.slice(5)
 
+  // Only pass ExpressionAttributeNames if it is populated
+  let optionalParams = {}
+  if (Object.keys(expressionAttributeNames).length > 0) {
+    optionalParams.ExpressionAttributeNames = expressionAttributeNames
+  }
+
   const { Attributes } = await ddbClient.send(new UpdateCommand({
+    ...optionalParams,
     TableName,
     Key: { id },
     UpdateExpression: updateExpression,
     ExpressionAttributeValues: expressionAttributeValues,
-    ExpressionAttributeNames: expressionAttributeNames,
     ReturnValues: 'ALL_NEW'
   }))
 
