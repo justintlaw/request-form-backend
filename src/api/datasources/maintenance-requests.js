@@ -32,8 +32,6 @@ const createMaintenanceRequest = async ({ name, address, email, phone, issue }) 
     }
   }))
 
-  console.log('res', res)
-
   return {}
 }
 
@@ -122,11 +120,8 @@ const updateMaintenanceRequest = async (id, { name, address, email, phone, issue
   // Only pass ExpressionAttributeNames if it is populated
   let optionalParams = {}
   if (Object.keys(expressionAttributeNames).length > 0) {
-    console.log('im in')
     optionalParams.ExpressionAttributeNames = expressionAttributeNames
   }
-
-  console.log('hi')
 
   const { Attributes } = await ddbClient.send(new UpdateCommand({
     ...optionalParams,
