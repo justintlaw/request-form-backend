@@ -5,7 +5,8 @@ const { DynamoDB } = require('@aws-sdk/client-dynamodb')
 const { DynamoDBDocumentClient, GetCommand, ScanCommand, QueryCommand, PutCommand, UpdateCommand, DeleteCommand } = require('@aws-sdk/lib-dynamodb')
 const { TABLE_NAME: TableName = 'maintenance_requests' } = process.env
 
-const client = new DynamoDB({ endpoint: 'http://localhost:8000' })
+const options = process.env.IS_LOCAL ? { endpoint: 'http://localhost:8000' } : {}
+const client = new DynamoDB(options)
 const ddbClient = DynamoDBDocumentClient.from(client, {
   marshallOptions: {
     removeUndefinedValues: true
