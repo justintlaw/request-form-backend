@@ -4,7 +4,7 @@ import * as cdk from 'aws-cdk-lib'
 import { RequestFormPipelineStack } from '../lib/request-form-pipeline'
 
 const app = new cdk.App();
-new RequestFormPipelineStack(app, 'RequestFormBackendStack', {
+new RequestFormPipelineStack(app, 'RequestFormBackendCodePipeline', {
   /* If you don't specify 'env', this stack will be environment-agnostic.
    * Account/Region-dependent features and context lookups will not work,
    * but a single synthesized template can be deployed anywhere. */

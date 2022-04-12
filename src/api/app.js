@@ -32,20 +32,30 @@ app.use((req, res, next) => {
 
 // Authorization
 app.use((req, res, next) => {
+  // health check
+  if (req.path === '/health') {
+    return res.status(200).json({ message: 'healthy' })
+  }
+
   // No authorization needed to create a form or for local use
-  if (req.path === '/' && req.method === 'POST' || process.env.IS_LOCAL === 'true') {
+  if (req.path === '/api/requests' && req.method === 'POST' || process.env.IS_LOCAL === 'true') {
     next()
   } else {
-    const accessTokenFromClient = req.headers.authorization
+    let accessTokenFromClient = req.headers.authorization
 
     if (!accessTokenFromClient) {
       return res.status(401).json({ message: 'Not authenticated' })
     }
 
+    // Allow requests from postman
+    if (accessTokenFromClient.startsWith('Bearer')) {
+      accessTokenFromClient = accessTokenFromClient.split(' ')[1]
+    }
+
     cognitoExpress.validate(accessTokenFromClient, (err, response) => {
       if (err) {
         console.error(err)
-        return res.status(401).send(err)
+        return res.status(401).send({ message: 'Failed to authenticate' })
       }
 
       req.user = response
