@@ -9,7 +9,7 @@ This is contains two parts. First, the infrastructure which is located in the `/
 * `npm run db:start` - create dynamodb locally in docker
 * `npm run db:setup` - setup the table locally
 * `npm run api:local` - run the express api locally
-* (optional) `npm run db:gui` - expose a gui for dynamodb on port 8001
+* `npm run db:gui` (optional) - expose a gui for dynamodb on port 8001
 
 ## AWS cdk commands
 
